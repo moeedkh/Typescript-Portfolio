@@ -1,0 +1,36 @@
+
+#! /usr/bin/env node
+let a:number = Math.round(10*Math.random());
+
+
+import inquirer from "inquirer";
+
+const Guess = await inquirer.prompt([
+  {
+  name: "num1",                                                                             
+  message: "Guess a number between 1 to 10 ?",
+  type: 'number',
+}]);
+
+
+if (a > Guess.num1) {
+  console.log("Your Guessed number is smaller than actual number, Lets give it a second chance");
+}
+  else if(a < Guess.num1)
+   {console.log("Your Guessed number is greater than actual number, Lets give it a second chance");}
+   else if (a === Guess.num1)
+  {console.log("You guessed it correctly !");}
+
+  const Second_Guess = await inquirer.prompt([
+    {
+    name: "num1",                                                                             
+    message: "Guess the number ?",
+    type: 'number',
+  }]);
+
+  if (a != Second_Guess.num1) {
+    console.log("You could'nt guess it. Better luck next time !");
+    console.log(`The number was ${a}`);
+  }
+         else if (a === Second_Guess.num1)
+    {console.log("You guessed it correctly !");}
