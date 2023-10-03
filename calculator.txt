@@ -1,0 +1,50 @@
+
+#! /usr/bin/env node
+import inquirer from "inquirer";
+const answer = await inquirer.prompt([
+  {
+  name: "num1",                                                                             
+  message: "Enter the first number",
+  type: 'number',
+},
+{
+  name: "num2",                                                                  
+  message: "Enter the second number",
+  type: 'number',
+},{
+
+name: "Operator",                                                                  
+  message: "Which operation do you want to perform?",
+  type: 'list',
+  choices: ["Add","subtract","Divide","Multiply"],
+}
+
+]);
+
+
+
+let result : number=0;
+if (answer.Operator == "Add") {
+
+  
+  let result = answer.num1 + answer.num2;
+  console.log(`The answer is ${result}`);
+}
+else if (answer.Operator == "subtract") {
+
+  
+  let result = answer.num1 - answer.num2;
+  console.log(`The answer is ${result}`);
+}
+else if (answer.Operator == "Divide") {
+
+  
+  let result = answer.num1 / answer.num2;
+  console.log(`The answer is ${result}`);
+}
+else if (answer.Operator == "Multiply") {
+
+  
+  let result = answer.num1 * answer.num2;
+  console.log(`The answer is ${result}`);
+}
