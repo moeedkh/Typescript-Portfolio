@@ -1,0 +1,75 @@
+#! /usr/bin/env node
+let  ToDoList=["bagpack","Cash withdrawl","child pickup"];
+
+// Action Required
+import inquirer from "inquirer";
+async function Action(){ 
+const answer = await  inquirer.prompt([
+{
+name :"Todo",
+Message : "What do you want to do?",
+type:"list",
+choices:["Add ToDo Item","Delete ToDo Item","Show ToDo List","Exit"],
+
+}
+
+]);
+return answer.Todo;
+}
+let action = await Action();
+
+if (action === ("Add ToDo Item")){
+ let Item = await Add();
+ ToDoList.push(Item);
+ console.log(ToDoList)
+}
+
+
+// Add Function
+async function Add() {
+const answer = await  inquirer.prompt([
+{
+name :"Add",
+Message : "What do you want to add?",
+type:"string",
+
+}
+]);
+
+return answer.Add;
+} 
+  
+if (action === ("Delete ToDo Item")){
+ let ItemDel = await Delete();
+ //let index = ToDoList.indexOf(Item);
+ //console.log( ToDoList.splice(index,1));
+
+
+ ToDoList = ToDoList.filter(item => item !== ItemDel);
+ console.log(ToDoList);
+}
+
+// Delete Function
+
+async function Delete() {
+const Deletion = await  inquirer.prompt([
+{
+name :"Del",
+Message : "What do you want to Delete?",
+type:"string",
+
+}
+]);
+
+return Deletion.Del;
+} 
+
+// Display Function
+if(action === "Show ToDo List") { 
+  
+  console.log(ToDoList)};
+
+// Exit Function
+  if(action === "Exit") { 
+  
+    process.exit()};
