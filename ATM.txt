@@ -1,0 +1,391 @@
+
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+#!/usr/bin/env node
+
+
+
+// USer DataBase of the Bank
+let User1 = {
+ID : "Ahmed1",
+Pin : 6392,
+Balance : Math.round(Math.random()* (20000 - 500) + 500),
+};
+
+let User2 = {
+  ID : "Sadiq2",
+  Pin : 2568,
+  Balance : Math.round(Math.random()* (20000 - 500) + 500),
+  };
+
+// Verifying Login ID and Pin
+
+interface UserData {ID:string; Pin:number; Balance:number;}
+
+import inquirer from "inquirer";
+import { Action } from "rxjs/internal/scheduler/Action";
+
+// verifying user credenctials in an Async Function with await call
+
+async function verifyUser(U1:UserData, U2:UserData) {
+console.log(U1);
+console.log(U2);
+const IdCheck = await inquirer.prompt([
+  {
+    name : "IP",
+    message : " please enter your user ID",
+    type : 'string',
+  }
+]);
+
+if (IdCheck.IP === U1.ID ||  IdCheck.IP === U2.ID )
+
+
+{
+  const pinCheck = await inquirer.prompt([
+    { 
+      name : "Pin",
+      message : " please enter your 4-digit Pin code",
+      type : 'number',
+    }    
+  ]);
+  
+  if (pinCheck.Pin === U1.Pin ||  pinCheck.Pin === U2.Pin ) 
+  {
+      
+   
+
+        return IdCheck.IP;
+  }
+  else {
+    console.log("Pin not verified");
+    return "not verified";
+  }
+    
+}
+
+else { 
+  console.log("User not verified");
+  process.exit();
+}
+
+}
+
+
+async function main() {
+
+  let result = await verifyUser(User1,User2);
+if (result != "User not verified"){
+return result;}
+
+ 
+  }
+ 
+
+// got Verified USerID outside now
+  let ThisUserId = await main();
+
+
+// ASking for transaction Type
+async function TransactionType() {
+  const TransType = await inquirer.prompt
+  ([
+    {
+      name: "Trans",                                                                  
+      message: "Which operation do you want to perform?",
+      type: 'list',
+     
+      choices: ["Balance Inquiry","Fast Cash","Cash Withdrawl",],
+    }]);
+
+    console. log(TransType.Trans);
+    return TransType.Trans;
+  }
+  
+let TransType = await TransactionType();
+
+async function fetchamount() {
+  const fetch = await inquirer.prompt
+  ([
+    {
+      name: "amount",                                                                  
+      message: "WWhat amount you want to withdraw?",
+      type: 'number',
+        
+    }]);
+
+    return fetch.amount;
+  };
+
+  async function fastamount() {
+    const Fast = await inquirer.prompt
+    ([
+      {
+        name: "fastamt",                                                                  
+        message: "What amount you want to withdraw?",
+        type: 'list',
+        choices: ["500","1000","2000","3000","5000","10000",], 
+            
+      }]);
+  
+      return Fast.fastamt;
+    };
+
+  //Load User Data into Balance
+  if (ThisUserId===User1.ID ){
+    let ThisUserBalance = User1.Balance;
+    let fetch_amount:number;
+    if (TransType === "Balance Inquiry"){
+     balanceinfo(ThisUserBalance);
+    console.log(ThisUserBalance);}
+    if (TransType === "Cash Withdrawl"){
+    
+        let fetch_amount = await fetchamount();
+        console.log(fetch_amount);
+      Cashreq(User1.Balance,fetch_amount);
+        console.log(ThisUserBalance);
+    }
+    if (TransType === "Fast Cash"){
+     {
+        let fetch_amount = await fastamount();
+        console.log(fetch_amount);
+      Cashreq(User1.Balance,fetch_amount);
+        console.log(ThisUserBalance);
+    }}
+  }
+  else if (ThisUserId===User2.ID ){
+    let ThisUserBalance:number = User2.Balance;
+    if (TransType === "Balance Inquiry"){
+      balanceinfo(User1.Balance);
+      console.log(ThisUserBalance);}
+    if (TransType === "Cash Withdrawl"){
+      if (TransType  === "Cash Withdrawl"){
+        let fetch_amount = await fetchamount();
+        console.log(fetch_amount);
+      Cashreq(User1.Balance,fetch_amount);
+        console.log(ThisUserBalance);
+  }}
+  if (TransType === "Fast Cash"){
+    {
+       let fetch_amount = await fastamount();
+       console.log(fetch_amount);
+     Cashreq(User1.Balance,fetch_amount);
+       console.log(ThisUserBalance);
+   }}
+
+}
+
+
+  // ACiton FUnciton 
+
+  function balanceinfo(arg1:number){
+    if (TransType === "Balance Inquiry"){
+      console.log(`Your current balance is ${arg1}`);
+    }
+      };
+
+  function Cashreq(arg1:number,arg2:number ){
+        if (arg1>arg2){
+          console.log(`Your balance is ${arg1}`);
+          console.log(`Your withdrawn amount is ${arg2}, Please collect Cash !`);
+          let leftover_cash = arg1-arg2;
+          console.log(`Your balance amount is now ${leftover_cash}`);
+        }
+        else {console.log("Balance in your account is insufficient to complete this transaction")}
+          };
+    
+
+  
