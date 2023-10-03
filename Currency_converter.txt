@@ -1,0 +1,105 @@
+
+// tyring to build nested objects
+
+interface Rate {
+USD:number,
+PKR:number,
+EURO:number,
+
+}
+
+let EXCHGRATE : {USD:Rate,PKR:Rate, EURO:Rate}
+=
+{
+  
+  USD : {USD:1,PKR:282,EURO:0.96},
+  PKR: {USD:0.0035,PKR:1,EURO:0.0033},
+  EURO: {USD:1.05,PKR:300.14,EURO:1},
+};
+
+// Inquiring User inputs
+import inquirer from "inquirer";
+const currencyA = await inquirer.prompt([{
+
+name:"currA",
+message:"Which currency do you want to covert from?",
+type:"list",
+choices:["USD","PKR","EURO"],
+
+}
+
+
+]);
+
+const AmtA = await inquirer.prompt([{
+
+  name:"Amt",
+  message:"Enter the amount?",
+  type:"number",
+ 
+  
+  }
+  
+  
+  ]);
+
+const currencyB = await inquirer.prompt([{
+
+  name:"currB",
+  message:"Which currency do you want to covert to?",
+  type:"list",
+  choices:["USD","PKR","EURO"],
+  
+  }
+  
+  
+  ]);
+
+
+
+
+
+  console.log(currencyA.currA);
+  console.log(currencyB.currB);
+  console.log(AmtA.Amt);
+
+
+  // conditions to convert 
+
+  if (currencyA.currA === "USD" && currencyB.currB === "PKR") {
+     let AmtB = EXCHGRATE.USD.PKR * AmtA.Amt
+    console.log(AmtB);
+
+  }
+
+
+  else if (currencyA.currA === "PKR" && currencyB.currB === "USD") {
+    let AmtB = EXCHGRATE.PKR.USD*AmtA.Amt ;
+   console.log(AmtB);
+
+ }
+
+ else if (currencyA.currA === "USD" && currencyB.currB === "EURO") {
+  let AmtB = EXCHGRATE.USD.EURO * AmtA.Amt
+ console.log(AmtB);
+
+}
+
+else if (currencyA.currA === "EURO" && currencyB.currB === "USD") {
+  let AmtB =   EXCHGRATE.EURO.USD *AmtA.Amt ;
+ console.log(AmtB);
+
+}
+
+else if (currencyA.currA === "EURO" && currencyB.currB === "PKR") {
+  let AmtB =   EXCHGRATE.EURO.PKR *AmtA.Amt ;
+ console.log(AmtB);
+
+}
+
+else if (currencyA.currA === "PKR" && currencyB.currB === "EURO") {
+  let AmtB =   EXCHGRATE.PKR.EURO *AmtA.Amt ;
+ console.log(AmtB);
+
+ 
+}
